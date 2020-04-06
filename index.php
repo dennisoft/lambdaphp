@@ -21,14 +21,16 @@ try {
         'QueueUrl' => $queueUrl, // REQUIRED
         'WaitTimeSeconds' => 0,
     ));
-    if (!empty($result->get('Messages'))) {
-        var_dump($result->get('Messages')[0]);
-        $result = $client->deleteMessage([
-            'QueueUrl' => $queueUrl, // REQUIRED
-            'ReceiptHandle' => $result->get('Messages')[0]['ReceiptHandle'] // REQUIRED
-        ]);
-    } else {
-        echo "No messages in queue. \n";
+    for ($x = 0; $x<=count($result->get('Messages'));$x++) {
+        if (!empty($result->get('Messages'))) {
+            var_dump($result->get('Messages')[0]);
+            $result = $client->deleteMessage([
+                'QueueUrl' => $queueUrl, // REQUIRED
+                'ReceiptHandle' => $result->get('Messages')[0]['ReceiptHandle'] // REQUIRED
+            ]);
+        } else {
+            echo "No messages in queue. \n";
+        }
     }
 } catch (AwsException $e) {
     // output error message if fails

@@ -12,10 +12,8 @@ class SQSQS {
       * Initialize SQS.
       */
       public static function init() {
-        if (!self::$sqs) {
-          $aws = new \Aws\Sdk(self::awsConfig);
-          self::$sqs = $aws->createSQS();
-        }
+        $aws = new \Aws\Sdk(self::awsConfig);
+        self::$sqs = $aws->createSQS();
       }
 
      /**

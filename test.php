@@ -9,19 +9,12 @@ class SQSQS {
       ];
 
      /**
-      * Initialize SQS.
-      */
-      public static function init() {
-        $aws = new \Aws\Sdk(self::awsConfig);
-        self::$sqs = $aws->createSQS();
-      }
-
-     /**
       * Delete message after the operation has completed.
       */
       public static function delete($queue, $handle) {
-        self::init();
-        $result = self::$sqs->getQueueUrl(['QueueName' => $queue]);
+        $aws = new \Aws\Sdk(self::awsConfig);
+        $sqs = $aws->createSQS();
+        $result = $sqs->getQueueUrl(['QueueName' => $queue]);
         $qurl = $result->get('QueueUrl');
 
         self::$sqs->deleteMessage([

@@ -16,12 +16,12 @@ $client = new SqsClient([
 try {
     $result = $client->receiveMessage(array(
         'AttributeNames' => ['SentTimestamp'],
-        'MaxNumberOfMessages' => 1,
         'MessageAttributeNames' => ['All'],
         'QueueUrl' => $queueUrl, // REQUIRED
         'WaitTimeSeconds' => 0,
     ));
-    for ($x = 0; $x<=count($result->get('Messages'));$x++) {
+    $a = $result->get('Messages');
+    for ($x = 0; $x<=count($a);$x++) {
         if (!empty($result->get('Messages'))) {
             var_dump($result->get('Messages')[0]);
             $result = $client->deleteMessage([

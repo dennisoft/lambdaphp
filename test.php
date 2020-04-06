@@ -11,7 +11,7 @@ const awsConfig = [
   /**
   * Initialize SQS.
   */
-  private static function init() {
+  public static function init() {
     if (!self::$sqs) {
       $aws = new \Aws\Sdk(self::awsConfig);
       self::$sqs = $aws->createSQS();
@@ -32,5 +32,5 @@ const awsConfig = [
     ]);
   }
 
-  $response = self::delete("sqs-tutorial","uiegvdsklvbdv");
+  $response = delete("sqs-tutorial","uiegvdsklvbdv");
   var_dump($response);

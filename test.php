@@ -1,9 +1,8 @@
 <?php
-$queueUrl = "https://sqs.us-west-2.amazonaws.com/393444192063/sqs-tutorial";
 
 require_once 'vendor/autoload.php';
 $sdk = new \Aws\Sdk();
-$sqsClient = $sdk->createSQS(['region' => 'us-west-2', 'version' => '2012-11-05']);
+$sqsClient = $sdk->createSQS(['region' => 'us-west-2', 'version' => 'latest']);
 
  $result = $sqsClient->getQueueUrl(['QueueName' => "sqs-tutorial"]);
  $qurl = $result->get('QueueUrl');

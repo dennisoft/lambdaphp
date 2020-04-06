@@ -21,12 +21,12 @@ try {
         'WaitTimeSeconds' => 0,
     ));
     $a = $result->get('Messages');
-    for ($x = 0; $x<=count($a);$x++) {
+    for ($x = 0; $x<=10;$x++) {
         if (!empty($result->get('Messages'))) {
-            var_dump($result->get('Messages')[0]);
+            var_dump($result->get('Messages')[$x]);
             $result = $client->deleteMessage([
                 'QueueUrl' => $queueUrl, // REQUIRED
-                'ReceiptHandle' => $result->get('Messages')[0]['ReceiptHandle'] // REQUIRED
+                'ReceiptHandle' => $result->get('Messages')[$x]['ReceiptHandle'] // REQUIRED
             ]);
         } else {
             echo "No messages in queue. \n";

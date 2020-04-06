@@ -10,7 +10,7 @@ $sqsClient = $sdk->createSqs(['region' => 'us-west-2', 'version' => '2012-11-05'
 echo "Sending message\n";
 $sqsClient->sendMessage(array(
     'QueueUrl' => $queueUrl,
-    'MessageBody' => 'Hello World!',
+    'MessageBody' => 'Hello Home!',
 ));
 
 

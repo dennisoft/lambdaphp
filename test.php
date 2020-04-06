@@ -4,8 +4,10 @@ require_once 'vendor/autoload.php';
 $sdk = new \Aws\Sdk();
 $sqsClient = $sdk->createSQS(['region' => 'us-west-2', 'version' => 'latest']);
 
- $result = $sqsClient->getQueueUrl(['QueueName' => "sqs-tutorial"]);
- $qurl = $result->get('QueueUrl');
+$result = $sqsClient->getQueueUrl(['QueueName' => "sqs-tutorial"]);
+$qurl = $result->get('QueueUrl');
+
+echo $qurl;
 
 echo "Sending message\n";
 $sqsClient->sendMessage(array(

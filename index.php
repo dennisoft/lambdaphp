@@ -8,9 +8,8 @@ $queueUrl = "https://sqs.us-west-2.amazonaws.com/393444192063/sqs-tutorial";
 
 
 $client = new SqsClient([
-    'profile' => 'default',
     'region' => 'us-west-2',
-    'version' => '2012-11-05'
+    'version' => 'latest'
 ]);
 
 try {

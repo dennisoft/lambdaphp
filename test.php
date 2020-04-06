@@ -1,30 +1,37 @@
 <?php
+$queueUrl = "https://sqs.us-west-2.amazonaws.com/393444192063/sqs-tutorial";
 
-require 'vendor/autoload.php';
+require_once 'vendor/autoload.php';
+$sdk = new \Aws\Sdk();
+$sqsClient = $sdk->createSqs(['region' => 'eu-west-1', 'version' => '2012-11-05']);
 
-class SQSQS {
-    const awsConfig = [
-        'region'  => 'us-west-2',
-        'version' => 'latest'
-      ];
 
-     /**
-      * Delete message after the operation has completed.
-      */
-      public static function delete($queue, $handle) {
-        $aws = new \Aws\Sdk(self::awsConfig);
-        $sqs = $aws->createSQS();
-        $result = $sqs->getQueueUrl(['QueueName' => $queue]);
-        $qurl = $result->get('QueueUrl');
 
-        self::$sqs->deleteMessage([
-          'QueueUrl'      => $qurl,
-          'ReceiptHandle' => $handle
-        ]);
-      }
+echo "Sending message\n";
+$sqsClient->sendMessage(array(
+    'QueueUrl' => $queueUrl,
+    'MessageBody' => 'Hello World!',
+));
+
+
+
+echo "Receiving messages\n";
+$result = $sqsClient->receiveMessage([
+    'AttributeNames' => ['All'],
+    'MaxNumberOfMessages' => 10,
+    'QueueUrl' => $queueUrl,
+]);
+foreach ($result->search('Messages[]') as $message) {
+    echo "- Message: {$message['Body']} (Id: {$message['MessageId']})\n";
 }
 
-$response = new SQSQS();
-$response->delete("sqs-tutorial","uiegvdsklvbdv");
-var_dump($response);
 
+
+echo "Deleting messages\n";
+foreach ($result->search('Messages[]') as $message) {
+    $sqsClient->deleteMessage([
+        'QueueUrl' => $queueUrl,
+        'ReceiptHandle' => $message['ReceiptHandle']
+    ]);
+    echo "- Deleted: {$message['MessageId']})\n";
+}

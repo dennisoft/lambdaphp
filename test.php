@@ -3,7 +3,7 @@ $queueUrl = "https://sqs.us-west-2.amazonaws.com/393444192063/sqs-tutorial";
 
 require_once 'vendor/autoload.php';
 $sdk = new \Aws\Sdk();
-$sqsClient = $sdk->createSqs(['region' => 'eu-west-2', 'version' => '2012-11-05']);
+$sqsClient = $sdk->createSqs(['region' => 'us-west-2', 'version' => '2012-11-05']);
 
 
 

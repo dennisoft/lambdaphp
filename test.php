@@ -5,21 +5,26 @@ $sdk = new \Aws\Sdk();
 $sqsClient = $sdk->createSQS(['region' => 'us-west-2', 'version' => 'latest']);
 
 $result = $sqsClient->getQueueUrl(['QueueName' => "sqs-tutorial"]);
-$qurl = $result->get('QueueUrl');
+$queueUrl = $result->get('QueueUrl');
 
-echo $qurl;
+echo $queueUrl;
 
-echo "Sending message\n";
+echo "\nSending messages\n";
 $sqsClient->sendMessage(array(
-    'QueueUrl' => $qurl,
+    'QueueUrl' => $queueUrl,
     'MessageBody' => 'Hello Home!',
+));
+
+$sqsClient->sendMessage(array(
+    'QueueUrl' => $queueUrl,
+    'MessageBody' => 'Hello World!',
 ));
 
 echo "Receiving messages\n";
 $result = $sqsClient->receiveMessage([
     'AttributeNames' => ['All'],
     'MaxNumberOfMessages' => 10,
-    'QueueUrl' => $qurl,
+    'QueueUrl' => $queueUrl,
 ]);
 foreach ($result->search('Messages[]') as $message) {
     echo "- Message: {$message['Body']} (Id: {$message['MessageId']})\n";
